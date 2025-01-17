@@ -10,7 +10,9 @@ def proxy():
     if request.method == 'POST':
         req_data = request.get_json()
         
-        auth_header = request.headers.get('Authorization')
+        # Get x-api-key and convert to bearer token
+        api_key = request.headers.get('x-api-key')
+        auth_header = f'Bearer {api_key}' if api_key else None
         
         headers = {
             'Content-Type': 'application/json',
