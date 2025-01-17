@@ -5,7 +5,7 @@ import requests
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/proxy', methods=['GET', 'POST'])
+@app.route('/proxy/v1/messages', methods=['GET', 'POST'])
 def proxy():
     if request.method == 'POST':
         req_data = request.get_json()
