@@ -10,7 +10,6 @@ def proxy():
     if request.method == 'POST':
         req_data = request.get_json()
         
-        # Get bearer token from request headers
         auth_header = request.headers.get('Authorization')
         
         headers = {
@@ -20,6 +19,9 @@ def proxy():
         
         response = requests.post('https://api.aimlapi.com/v1/messages', json=req_data, headers=headers)
         
+        if response.status_code not in [200, 201]:
+            return {'error': 'Service overloaded'}, 429
+            
         return Response(
             response.content,
             status=200,
